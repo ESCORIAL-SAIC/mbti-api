@@ -30,7 +30,7 @@ use the `options` array's value as the answer.
 2. **Get Personality Type**
 
 ```http
-POST /api/personality
+POST /api/personality/submit
 
 {
   "answers": [
