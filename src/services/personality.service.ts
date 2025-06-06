@@ -78,7 +78,7 @@ const getPersonalityTest = async (): Promise<Array<Question>> => {
     questions.map(async (question: any) => {
       const translatedText = await translateText(question.text, "es")
       return {
-        id: Buffer.from(translatedText).toString("base64url"),
+        id: Buffer.from(question.text).toString("base64url"),
         text: translatedText,
         options: translatedDefaultOptions
       }
@@ -87,6 +87,7 @@ const getPersonalityTest = async (): Promise<Array<Question>> => {
 
   return translatedQuestions
 }
+
 
 const getTestResults = async (
   submissionData: Submission[],
@@ -112,11 +113,32 @@ const getTestResults = async (
     payload
   )
 
+  console.log(res)
+
   await session.post(res.data.redirect, payload)
 
   const sess = await getSession()
 
+  console.log(sess)
+
   const traitsData = await getTraits()
+
+  console.log(traitsData)
+
+  //niceName, snippet, scales, label, trait, description, imageAlt
+
+  const translatedTraits = await Promise.all(
+  traitsData.traits.map(async (trait) => ({
+      ...trait,
+      trait: await translateText(trait.trait, "es"),
+      label: await translateText(trait.label, "es"),
+      description: await translateText(trait.description, "es"),
+      snippet: await translateText(trait.snippet, "es"),
+      imageAlt: await translateText(trait.imageAlt, "es"),
+    }))
+  )
+
+  const translatedNiceName = await translateText(sess.user.localized.niceType, "es")
 
   return {
     avatarAlt: sess.user.avatarAlt,
@@ -124,9 +146,9 @@ const getTestResults = async (
     avatarSrcStatic: sess.user.avatarFull,
     personality: sess.user.personality,
     variant: sess.user.variant,
-    niceName: sess.user.localized.niceType,
+    niceName: translatedNiceName,
     profileUrl: sess.user.localized.profileUrl,
-    traits: traitsData.traits,
+    traits: translatedTraits,
     role: sess.user.role,
     strategy: sess.user.strategy,
   }
