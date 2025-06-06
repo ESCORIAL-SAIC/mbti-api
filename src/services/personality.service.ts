@@ -12,6 +12,8 @@ import {
 import { replaceMap } from "@/utils/replaceMap"
 import session from "@/utils/session"
 import { HttpError } from "@/utils/httpError"
+import { translateText } from "@/utils/translate"
+import { optional } from "zod"
 
 /**
  * @deprecated
@@ -65,11 +67,25 @@ const getPersonalityTest = async (): Promise<Array<Question>> => {
     { text: "Agree strongly", value: 3 },
   ]
 
-  return questions.map((question: any) => ({
-    id: Buffer.from(question.text).toString("base64url"),
-    text: question.text,
-    options: defaultOptions,
-  }))
+  const translatedDefaultOptions = await Promise.all(
+  defaultOptions.map(async (option) => ({
+      ...option,
+      text: await translateText(option.text, "es")
+    }))
+  )
+
+  const translatedQuestions = await Promise.all(
+    questions.map(async (question: any) => {
+      const translatedText = await translateText(question.text, "es")
+      return {
+        id: Buffer.from(translatedText).toString("base64url"),
+        text: translatedText,
+        options: translatedDefaultOptions
+      }
+    })
+  )
+
+  return translatedQuestions
 }
 
 const getTestResults = async (
