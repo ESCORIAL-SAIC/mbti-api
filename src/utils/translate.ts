@@ -9,24 +9,18 @@ import axios from "axios"
  */
 export const translateText = async (text: string, targetLang = "es"): Promise<string> => {
   const url = "https://clients5.google.com/translate_a/t"
-  const params = new URLSearchParams({
-    client: "dict-chrome-ex",
-    sl: "auto",
-    tl: targetLang,
-    q: text,
-  })
+  const encodedText = encodeURIComponent(text)
 
-  const res = await axios.get(url + "?" + params.toString(), {
+  const params = `client=dict-chrome-ex&sl=auto&tl=${targetLang}&q=${encodedText}`
+
+  const res = await axios.get(`${url}?${params}`, {
     headers: { "User-Agent": "Mozilla/5.0" },
     responseType: "json",
   })
 
-  const trans = (res.data.sentences ?? [])
-    .map((s: any) => s.trans)
-    .join("")
-    .trim()
+  const translatedText = res.data?.[0]?.[0]
 
-  if (!trans) throw new Error("No se pudo traducir el texto")
+  if (!translatedText) throw new Error("No se pudo traducir el texto")
 
-  return trans
+  return translatedText
 }
