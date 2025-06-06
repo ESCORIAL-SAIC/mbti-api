@@ -193,7 +193,6 @@ If you are from 16Personalities and want this project to be taken down, please c
 ### Thanks
 
 - [16Personalities](https://16personalities.com) for the data.
-- [tux](https://github.com/tuxdotrs) - For providing proxy server for the API.
 
 ### License
 
