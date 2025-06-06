@@ -33,9 +33,9 @@ function handleNotFound(req: Request, res: Response) {
   const accept = req.headers["accept"] || ""
 
   if (accept.includes("application/json")) {
-    res.json({ message: "Nothing to see here. For more information see README. (https://github.com/ESCORIAL-SAIC/mbti-api/blob/main/README.md)" })
+    res.json({ message: "Nothing to see here. For more information see README. (https://github.com/ESCORIAL-SAIC/mbti-api)" })
   } else {
-    res.send("<pre>Nothing to see here. For more information see <a href=\"https://github.com/ESCORIAL-SAIC/mbti-api/blob/main/README.md\" target=\"_blank\">README</a>. (https://github.com/ESCORIAL-SAIC/mbti-api/blob/main/README.md)</pre>")
+    res.send("<pre>Nothing to see here. For more information see <a href=\"https://github.com/ESCORIAL-SAIC/mbti-api\" target=\"_blank\">README</a>. (https://github.com/ESCORIAL-SAIC/mbti-api)</pre>")
   }
 }
 
