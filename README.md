@@ -158,3 +158,11 @@ Response:
 ## 🛠️ Contributing
 
 Contributions are welcome! Please open an issue or pull request if you want to add something or fix a bug.
+
+---
+
+## 🙏 Acknowledgements
+
+This project integrates with the amazing [devil.ai](https://devil.ai) platform to enhance MBTI predictions and personality analysis.
+
+Special thanks to the devil.ai team for providing powerful tools and APIs that made this possible.
