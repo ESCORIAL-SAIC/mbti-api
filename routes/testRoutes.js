@@ -324,5 +324,24 @@ router.get('/get-test', async (req, res) => {
   }
 });
 
+router.delete('/delete-test', async (req, res) => {
+  const { name } = req.body;
+  try {
+    const testResult = await TestResult.findOne({ where: { name } });
+    if (!testResult)
+      return res.status(404).json({ error: 'No se encontró un test para este usuario' });
+
+    await Match.destroy({ where: { test_id: testResult.id } });
+    await Prediction.destroy({ where: { test_id: testResult.id } });
+    await TraitOrder.destroy({ where: { test_id: testResult.id } });
+    await testResult.destroy();
+
+    res.json({ message: 'Test eliminado correctamente' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al eliminar el test' });
+  }
+});
+
 
 module.exports = router;
