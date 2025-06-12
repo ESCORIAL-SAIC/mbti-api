@@ -307,7 +307,7 @@ router.get('/get-test', async (req, res) => {
 
     return res.status(200).json({
       data: {
-        test_url: test.test_url,
+        test_url: `${BACKEND_URL}/proxy/${test.id}`,
         prediction: test.prediction,
         predictions: predictionsObj,
         trait_order_conscious,
