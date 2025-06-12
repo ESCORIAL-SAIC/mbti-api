@@ -67,7 +67,7 @@ router.post('/create-test', async (req, res) => {
     const { test_id, test_url } = response.data.data;
 
     await TestResult.create({ id: test_id, name: name, test_url: test_url });
-    return res.json({ test_id, test_url, translated_test_url: `${BACKEND_URL}/proxy/test/${test.id}` });
+    return res.json({ test_id, test_url, translated_test_url: `${BACKEND_URL}/proxy/test/${test_id}` });
   } catch (error) {
     console.error('Error creando test:', error);
     return res.status(500).json({ error: 'No se pudo crear el test' });
@@ -317,7 +317,9 @@ router.get('/get-test', async (req, res) => {
         test_id: test.id,
         result_date: test.result_date,
         results_page: test.results_page,
-        translated_results_page: `${BACKEND_URL}/proxy/result/${test.id}`
+        translated_results_page: test.results_page
+          ? `${BACKEND_URL}/proxy/result/${test.id}`
+          : null
       }
     });
   } catch (error) {
