@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/proxy/:id', async (req, res) => {
+app.get('/proxy/test/:id', async (req, res) => {
   const id = req.params.id;
   const url = `https://devil-ai.translate.goog/api-personality-test/${id}?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=wapp`;
 
