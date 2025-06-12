@@ -1,0 +1,31 @@
+Table TestResults {
+  id uuid [pk]
+  test_url text
+  prediction text
+  result_date timestamp
+  results_page text
+}
+
+Table Predictions {
+  id uuid [pk]
+  test_id uuid [ref: > TestResults.id]
+  name text
+  score int
+}
+
+Table Matches {
+  id uuid [pk]
+  test_id uuid [ref: > TestResults.id]
+  prediction text
+  match_order int
+  trait_type text
+  type text
+  description text
+}
+
+Table TraitOrder {
+  id uuid [pk]
+  test_id uuid [ref: > TestResults.id]
+  role text
+  function_code text
+}
