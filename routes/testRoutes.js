@@ -317,6 +317,7 @@ router.get('/get-test', async (req, res) => {
         test_id: test.id,
         result_date: test.result_date,
         results_page: test.results_page,
+        translated_results_page: `${BACKEND_URL}/proxy/result/${test.id}`
       }
     });
   } catch (error) {
