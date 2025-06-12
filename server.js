@@ -38,6 +38,11 @@ app.use(bodyParser.json());
 
 app.use('/api', testRoutes);
 
+
+app.get('/', (req, res) => {
+  res.send('Nothing to see here. Please refer to /api-docs or GitHub repo (https://github.com/ESCORIAL-SAIC/mbti-api) for documentation.');
+});
+
 sequelize.sync();
 
 app.listen(PORT, () => {
