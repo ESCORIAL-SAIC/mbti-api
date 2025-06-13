@@ -84,7 +84,8 @@ Request:
 
 ```json
 {
-    "name": "string"
+    "name": "string",
+    "fullName": "string"
 }
 ```
 
@@ -93,7 +94,8 @@ Response:
 ```json
 {
   "test_id": "string",
-  "test_url": "string"
+  "test_url": "string",
+  "translated_test_url": "string"
 }
 ```
 
@@ -105,6 +107,7 @@ Response:
 {
   "data": {
     "test_url": "string",
+    "translated_test_url": "string",
     "prediction": "string",
     "predictions": {
       "INTP": "int",
@@ -148,9 +151,39 @@ Response:
     },
     "test_id": "string",
     "result_date": "datetime",
-    "results_page": "string"
+    "results_page": "string",
+    "translatated_results_page": "string"
   }
 }
+```
+
+**DELETE /api/delete-test**
+
+Request:
+
+```json
+{
+  "name": "string"
+}
+```
+
+---
+
+## Translation proxy
+
+In needed for spanish translation, a proxy was implemented, based on test ID it retrieves a translated version for test page and result page. 
+Examples:
+
+**GET /proxy/test/:id**
+
+```
+Returns translated test page for requested test ID.
+```
+
+**GET /proxy/result/:id**
+
+```
+Returns translated test result page for requested test ID.
 ```
 
 ---
