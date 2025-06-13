@@ -347,5 +347,21 @@ router.delete('/delete-test', async (req, res) => {
   }
 });
 
+router.get('/get-all-tests', async (req, res) => {
+  const tests = await TestResult.findAll()
+  if (!tests) 
+    return res.status(404).json({ error: 'No se encontraron tests' })
+  const response = []
+
+  tests.forEach(test => {
+    const item = {
+      name: test.name,
+      testUrl: `${BACKEND_URL}/api/get-test?name=${test.name}`
+    }
+    response.push(item)
+  })
+
+  return res.status(200).json(response)
+})
 
 module.exports = router;
