@@ -39,11 +39,9 @@ app.use(bodyParser.json());
 
 app.use('/api', testRoutes);
 
-
 app.get('/', (req, res) => {
   res.send('Nothing to see here. Please refer to /api-docs or GitHub repo (https://github.com/ESCORIAL-SAIC/mbti-api) for documentation.');
 });
-
 
 app.get('/proxy/test/:id', async (req, res) => {
   const id = req.params.id;
@@ -57,10 +55,23 @@ app.get('/proxy/test/:id', async (req, res) => {
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'networkidle0' });
 
+    await page.evaluate(() => {
+      const style = document.createElement('style');
+      style.innerHTML = `
+        iframe#gt-nvframe,
+        iframe[src*="translate.google.com"] {
+          display: none !important;
+        }
+        body {
+          margin-top: 0 !important;
+        }
+      `;
+      document.head.appendChild(style);
+    });
+
     const content = await page.content();
     await browser.close();
 
-    // Enviamos el HTML sin las cabeceras bloqueantes
     res.setHeader('Content-Type', 'text/html');
     res.send(content);
   } catch (error) {
@@ -81,10 +92,23 @@ app.get('/proxy/result/:id', async (req, res) => {
     const page = await browser.newPage();
     await page.goto(url, { waitUntil: 'networkidle0' });
 
+    await page.evaluate(() => {
+      const style = document.createElement('style');
+      style.innerHTML = `
+        iframe#gt-nvframe,
+        iframe[src*="translate.google.com"] {
+          display: none !important;
+        }
+        body {
+          margin-top: 0 !important;
+        }
+      `;
+      document.head.appendChild(style);
+    });
+
     const content = await page.content();
     await browser.close();
 
-    // Enviamos el HTML sin las cabeceras bloqueantes
     res.setHeader('Content-Type', 'text/html');
     res.send(content);
   } catch (error) {
