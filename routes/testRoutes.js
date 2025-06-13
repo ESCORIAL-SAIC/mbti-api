@@ -46,7 +46,7 @@ const BACKEND_URL = process.env.BACKEND_URL;
  */
 router.post('/create-test', async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, fullName } = req.body;
 
     const existingTest = await TestResult.findOne({
         where: { name: name }
@@ -58,7 +58,7 @@ router.post('/create-test', async (req, res) => {
       params: {
         api_key: API_KEY,
         notify_url: `${BACKEND_URL}/api/test-callback`,
-        name_of_tester: name || 'Usuario',
+        name_of_tester: fullName || name || 'Usuario',
         company_name: 'Escorial SAIC',
         theme_color: '#2b74b7'
       },
