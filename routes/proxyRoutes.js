@@ -1,12 +1,14 @@
 const puppeteer = require('puppeteer');
 require('dotenv').config();
+const express = require('express');
+const router = express.Router();
 
-app.get('/test/:id', async (req, res) => {
+router.get('/test/:id', async (req, res) => {
   const id = req.params.id;
   const url = `https://devil-ai.translate.goog/api-personality-test/${id}?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=wapp`;
 
   try {
-    const content = fetchTranslatedPage(url)
+    const content = await fetchTranslatedPage(url)
 
     res.setHeader('Content-Type', 'text/html');
     res.send(content);
@@ -16,13 +18,13 @@ app.get('/test/:id', async (req, res) => {
   }
 });
 
-app.get('/result/:id', async (req, res) => {
+router.get('/result/:id', async (req, res) => {
   const id = req.params.id;
   const url = `https://devil-ai.translate.goog/r/${id}?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=wapp`;
 
   try {
     
-    const content = fetchTranslatedPage(url)
+    const content = await fetchTranslatedPage(url)
 
     res.setHeader('Content-Type', 'text/html');
     res.send(content);
@@ -59,3 +61,5 @@ async function fetchTranslatedPage(url) {
 
     return content
 }
+
+module.exports = router
