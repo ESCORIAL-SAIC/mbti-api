@@ -2,11 +2,14 @@ const express = require('express');
 const axios = require('axios');
 const { TestResult, Prediction, TraitOrder, Match } = require('../models');
 const router = express.Router();
+const basicAuth = require('../auth/basicAuth')
 require('dotenv').config();
 
 const API_KEY = process.env.API_KEY;
 const BASE_URL = process.env.BASE_URL;
 const BACKEND_URL = process.env.BACKEND_URL;
+
+router.use(basicAuth)
 
 /**
  * @swagger
