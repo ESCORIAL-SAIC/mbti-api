@@ -2,6 +2,10 @@ const puppeteer = require('puppeteer');
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
+const basicAuth = require('../auth/basicAuth')
+require('dotenv').config();
+
+router.use(basicAuth)
 
 router.get('/test/:id', async (req, res) => {
   const id = req.params.id;
