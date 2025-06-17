@@ -40,6 +40,17 @@ Follow these steps to deploy the API locally:
 
 ---
 
+## 🔐 Authentication
+This API uses HTTP Basic Authentication to secure all endpoints.
+
+🔧 How to Authenticate
+You must include an Authorization header in each request:
+
+Authorization: Basic <base64(username:password)>  
+Where <base64(username:password)> is the Base64 encoding of your credentials.
+
+---
+
 ## Database Schema
 
 The database schema is available in [schema.dbml](./schema.dbml) in [DBML](https://dbml.dev/) format.
