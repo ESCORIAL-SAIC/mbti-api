@@ -352,9 +352,6 @@ router.get('/get-all-tests', async (req, res) => {
   try {
 
     const { users } = req.query
-    if (users.endsWith(';'))
-      users = users.substring(0, str.length - 1)
-    
     var tests = []
 
     if (users)  {
