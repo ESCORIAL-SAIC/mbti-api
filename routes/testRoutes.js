@@ -348,10 +348,31 @@ router.delete('/delete-test', async (req, res) => {
 });
 
 router.get('/get-all-tests', async (req, res) => {
+
   try {
-    const tests = await TestResult.findAll()
+
+    const { users } = req.query
+    if (users.endsWith(';'))
+      users = users.substring(0, str.length - 1)
+    
+    var tests = []
+
+    if (users)  {
+      const usersList = users.split(';')
+      if (!usersList.lenght < 1) {
+        return res.status(400).json({error: 'No se informaron usuarios'})
+      }
+      tests = await TestResult.findAll({
+        where: { name: usersList }
+      })
+    }
+    else {
+      tests = await TestResult.findAll()
+    }
+
     if (!tests) 
       return res.status(404).json({ error: 'No se encontraron tests' })
+
     const response = []
 
     tests.forEach(test => {
